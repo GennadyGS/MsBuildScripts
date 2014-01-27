@@ -15,7 +15,7 @@ if not "%DisableLog%" == "true" (
 )
 set MSBuildCmdLineParams=%LoggerSwitch% %*
 echo MSBuild command line params: %MSBuildCmdLineParams%
-call %~dp0\MSBuild.cmd %MSBuildCmdLineParams%
+call %~dp0\MSBuild40.cmd %MSBuildCmdLineParams%
 set BuildErrorLevel=%ErrorLevel%
 if exist "%LogFileName%.xml" if not "%DisableLog%" == "true" %MsxslToolPath% "%LogFileName%.xml" %LogXslFile% -o "%LogFileName%.html"
 if exist "%LogFileName%.html" if not "%DisableLog%" == "true" if not "%DisableShowReport%" == "true" start %LogFileName%.html
