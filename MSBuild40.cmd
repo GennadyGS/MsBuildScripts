@@ -1,9 +1,7 @@
 @echo off
 if /I "%Processor_Architecture%"=="x86" (
-	set NETFramework=Framework
+	set NETFrameworkDir=Framework
 ) else (
-	set NETFramework=Framework64
+	set NETFrameworkDir=Framework64
 )
-set DOTNETDIR=%windir%\Microsoft.NET\%NETFramework%\v4.0.30319
-echo DOTNETDIR=%DOTNETDIR%
-%DOTNETDIR%\MSBuild.exe /toolsversion:4.0 %*
+%windir%\Microsoft.NET\%NETFrameworkDir%\v4.0.30319\MSBuild.exe /toolsversion:4.0 %*
