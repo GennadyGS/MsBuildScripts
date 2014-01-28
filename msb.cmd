@@ -1,1 +1,1 @@
-PowerShell -file %~dp0msb.ps1 %*
+call PowerShell -file %~dp0msb.ps1 %*
