@@ -42,7 +42,7 @@ function RunXslTransform ([string] $xslFile, [string] $inputFile, [string] $outp
 $scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
 $logFileNameXml = "$logFileNameBase.xml"
 $logFileNameHtml = "$logFileNameBase.html"
-$loggerAssembly = "$scriptPath\tools\MSBuild.ExtensionPack.Loggers.dll"
+$loggerAssembly = "$scriptPath\bin\MSBuild.ExtensionPack.Loggers.dll"
 $xslFile = "$scriptPath\xsl\LogToHtml.xslt"
 $msBuildScriptFile = "$scriptPath\MSBuild40.cmd"
 if (!$disableLog) 
