@@ -1,3 +1,5 @@
+$defaultProjectFileMask = "*.msbuildproj";
+
 function CharIsSwitch([char] $c) 
 {
     $switchChars = '-/';
@@ -10,6 +12,16 @@ function IsProjectParam([string] $param)
     return (($fileExt) -eq '.sln') -or ($fileExt.EndsWith('proj') -or ($fileExt -eq '.xml'));
 }
 
+function IsProjectParamSpecified([string[]] $inputArgs) 
+{
+    $result = $false;
+    $inputArgs |        
+        foreach  {
+            if (IsProjectParam $_) {$result = $true}
+        };
+    return $result;
+}
+
 function TransformArgs([string[]] $inputArgs) 
 {
     return ,($inputArgs |
@@ -20,4 +32,8 @@ function TransformArgs([string[]] $inputArgs)
 
 $scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
 $msbArgs = TransformArgs $args
+if (!(IsProjectParamSpecified $args) -and (Test-Path $defaultProjectFileMask))
+{
+    $msbArgs = (Get-Item $defaultProjectFileMask)[0].Name + $msbArgs;
+}
 & $scriptPath\XMSbuild.cmd $msbArgs
