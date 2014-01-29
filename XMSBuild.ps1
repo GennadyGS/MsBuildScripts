@@ -16,8 +16,13 @@ param (
     $remainingArgs
 )
 
-function ForceLogPath([string] $path)
+function ForceFilePath([string] $filePath)
 {
+    $dirPath = Split-Path -parent $filePath;
+    if ($dirPath) 
+    {
+        New-Item -Path $dirPath -Type directory -Force
+    }
 }
 
 function CheckRemoveFile([string] $fileName)
@@ -47,7 +52,7 @@ $xslFile = "$scriptPath\xsl\LogToHtml.xslt"
 $msBuildScriptFile = "$scriptPath\MSBuild40.cmd"
 if (!$disableLog) 
 {
-    ForceLogPath $logFileName;
+    ForceFilePath $logFileNameBase;
 	$LoggerSwitch="/logger:XmlFileLogger,`"$loggerAssembly`";logfile=`"$logFileNameXml`";verbosity=Detailed"
     CheckRemoveFile $logFileNameXml;
     CheckRemoveFile $logFileNameHtml;
