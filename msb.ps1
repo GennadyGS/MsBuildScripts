@@ -34,7 +34,8 @@ $scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
 $msbArgs = TransformArgs $args
 if (!(IsProjectParamSpecified $args) -and (Test-Path $defaultProjectFileMask))
 {
-    $msbArgs = (Get-Item $defaultProjectFileMask)[0].Name + $msbArgs;
+    $defaultProjectFile = (Get-Item $defaultProjectFileMask)[0].Name;
+    $msbArgs = @($defaultProjectFile) + $msbArgs;
 }
 & $scriptPath\XMSbuild.cmd $msbArgs
 exit $LastExitCode;
