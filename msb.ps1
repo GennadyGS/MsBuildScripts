@@ -37,3 +37,4 @@ if (!(IsProjectParamSpecified $args) -and (Test-Path $defaultProjectFileMask))
     $msbArgs = (Get-Item $defaultProjectFileMask)[0].Name + $msbArgs;
 }
 & $scriptPath\XMSbuild.cmd $msbArgs
+exit $LastExitCode;

@@ -40,6 +40,14 @@ function RunXslTransform ([string] $xslFile, [string] $inputFile, [string] $outp
     $xslt.Transform($inputFile, $outputFile);    
 }
 
+function LogWrapUp ([string] $logFileNameXml, [string] $logFileNameHtml) 
+{
+    if (!(Test-Path $logFileNameXml)) {return}
+    RunXslTransform $xslFile $logFileNameXml $logFileNameHtml;
+    if ($disableShowReport -or !(Test-Path $logFileNameHtml)) {return}
+    Invoke-Item $logFileNameHtml
+}
+
 "Args:"
 "Project: $project"
 "LogFileNameBase: $logFileNameBase"
@@ -61,8 +69,7 @@ $msBuildCmdLineParams = @($project) + $loggerSwitch + $remainingArgs
 "MSBuild command line params: "
 $msBuildCmdLineParams
 & $msBuildScriptFile $msBuildCmdLineParams
-if ($disableLog) {return};
-if (!(Test-Path $logFileNameXml)) {return}
-RunXslTransform $xslFile $logFileNameXml $logFileNameHtml;
-if ($disableShowReport -or !(Test-Path $logFileNameHtml)) {return}
-Invoke-Item $logFileNameHtml
+"LastExitCode:$LastExitCode"
+if (!$disableLog) { LogWrapUp $logFileNameXml $logFileNameHtml};
+exit $LastExitCode;
+
