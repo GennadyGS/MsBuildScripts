@@ -7,14 +7,17 @@ function CharIsSwitch([char] $c)
 function IsProjectParam([string] $param)
 {
     $fileExt = [System.IO.Path]::GetExtension($param);
-    $res = (($fileExt) -eq '.sln') -or ($fileExt.EndsWith('proj'))
-    Write-Host "IsProjectParam($param) returns $res"
-    return $res;
+    return (($fileExt) -eq '.sln') -or ($fileExt.EndsWith('proj') -or ($fileExt -eq '.xml'));
+}
+
+function TransformArgs([string[]] $inputArgs) 
+{
+    return ,($inputArgs |
+        foreach {
+            if ((charIsSwitch $_[0]) -or (IsProjectParam $_)) {$_} else {"/t:$_"}
+        });
 }
 
 $scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
-$msbArgs = $args |
-    foreach {
-        if ((charIsSwitch $_[0]) -or (IsProjectParam $_)) {$_} else {"/t:$_"}
-    };
+$msbArgs = TransformArgs $args
 & $scriptPath\XMSbuild.cmd $msbArgs
