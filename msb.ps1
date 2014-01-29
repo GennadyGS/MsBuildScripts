@@ -11,6 +11,5 @@ if ($proj)
     $msbArgs = $args |
         foreach {if (charIsSwitch $_.ToString()[0]) {$_} else {"/t:$_"}};
     $scriptArgs = @($proj[0].Name) + $msbArgs;
-    $scriptFile = "$scriptPath\XMSbuild.cmd"
-    & $scriptFile $scriptArgs
+    & $scriptPath\XMSbuild.cmd $scriptArgs
 }
