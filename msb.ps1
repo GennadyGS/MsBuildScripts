@@ -4,12 +4,17 @@ function CharIsSwitch([char] $c)
     return $switchChars.Contains($c);
 }
 
-$scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
-$proj = Get-Item .\* -include ('*.sln', '*.csproj')
-if ($proj) 
+function IsProjectParam([string] $param)
 {
-    $msbArgs = $args |
-        foreach {if (charIsSwitch $_.ToString()[0]) {$_} else {"/t:$_"}};
-    $scriptArgs = @($proj[0].Name) + $msbArgs;
-    & $scriptPath\XMSbuild.cmd $scriptArgs
+    $fileExt = [System.IO.Path]::GetExtension($param);
+    $res = (($fileExt) -eq '.sln') -or ($fileExt.EndsWith('proj'))
+    Write-Host "IsProjectParam($param) returns $res"
+    return $res;
 }
+
+$scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
+$msbArgs = $args |
+    foreach {
+        if ((charIsSwitch $_[0]) -or (IsProjectParam $_)) {$_} else {"/t:$_"}
+    };
+& $scriptPath\XMSbuild.cmd $msbArgs
