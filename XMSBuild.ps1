@@ -35,6 +35,10 @@ function RunXslTransform ([string] $xslFile, [string] $inputFile, [string] $outp
     $xslt.Transform($inputFile, $outputFile);    
 }
 
+"Args:"
+"Project: $project"
+"LogFileNameBase: $logFileNameBase"
+"RemainingArgs: $remainingArgs"
 $scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
 $logFileNameXml = "$logFileNameBase.xml"
 $logFileNameHtml = "$logFileNameBase.html"
