@@ -1,23 +1,19 @@
 param (
-    [Parameter(Mandatory=$true, Position = 0)]
+    [Parameter(Position = 0)]
     [string] 
     $project, 
     
-    [Parameter()]
     [string] 
-    $logFileNameBase='Build.log', 
+    $logFileNameBase = 'Build.log', 
     
-    [Parameter()]
     [switch] 
-    $disableLog=$false,
+    $disableLog = $false,
     
-    [Parameter()]
     [switch] 
-    $disableShowReport=$false,
+    $disableShowReport = $false,
     
-    [Parameter(ValueFromRemainingArguments = $true)]
-    $remainingArgs    
-
+    [Parameter(ValueFromRemainingArguments=$true)]
+    $remainingArgs
 )
 
 function ForceLogPath([string] $path)
