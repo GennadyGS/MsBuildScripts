@@ -37,23 +37,23 @@
 	<xsl:template name="scripts">
 		<script>
 			  function ToggleLowImportanceText(){
-				var spans = document.getElementsByTagName('span');
-				for(var index in spans){
-				  var element = spans[index];
-				  if((/span/i.test(element.nodeName)) &amp;&amp; (element.className == 'LowImportance')){
-					if(element.style.display == 'none')
-					  element.style.display = '';
-					else
-					  element.style.display = 'none';
+				  var spans = document.getElementsByTagName('span');
+				  for(var index in spans){
+				    var element = spans[index];
+				    if((/span/i.test(element.nodeName)) &amp;&amp; (element.className == 'LowImportance')){
+					  if(element.style.display == 'none')
+					    element.style.display = '';
+					  else
+					    element.style.display = 'none';
+				    }
 				  }
-				}
 			  }
 			  function ToggleExpandBlock(aID){
-				var element = document.getElementById(aID);
-				if(element.style.display == 'none')
-				  element.style.display = '';
-				else
-				  element.style.display = 'none';
+				  var element = document.getElementById(aID);
+				  if(element.style.display == 'none')
+				    element.style.display = '';
+				  else
+				    element.style.display = 'none';
 			  }
 		</script>
 	</xsl:template>
