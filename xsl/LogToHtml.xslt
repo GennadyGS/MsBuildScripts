@@ -46,15 +46,9 @@
 			<xsl:apply-templates select="." mode="errorMessage"/>
 		</span>
 	</xsl:template>
-	<xsl:template match="warning[not(@subcategory) or (@subcategory != 'hint')]">
+	<xsl:template match="warning">
 		<a name="{generate-id(.)}"/>
 		<span class="Warning">
-			<xsl:apply-templates select="." mode="errorMessage"/>
-		</span>
-	</xsl:template>
-	<xsl:template match="warning[@subcategory = 'hint']">
-		<a name="{generate-id(.)}"/>
-		<span class="Hint">
 			<xsl:apply-templates select="." mode="errorMessage"/>
 		</span>
 	</xsl:template>

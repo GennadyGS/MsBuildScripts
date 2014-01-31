@@ -21,10 +21,6 @@
 					color : teal;
 					font-weight : bold;
 				}
-				.Hint{
-					color : gray;
-					font-weight : bold;
-				}
 				.Project{
 					color : black;
 					font-weight : bold;
@@ -149,15 +145,8 @@
 			</li>
 			<li>
 				<xsl:call-template name="listErrors">
-					<xsl:with-param name="nodes" select="/descendant::warning[not(@subcategory) or (@subcategory != 'hint')]"/>
+					<xsl:with-param name="nodes" select="/descendant::warning"/>
 					<xsl:with-param name="category" select="'Warning'"/>
-					<xsl:with-param name="collapsed" select="$collapsed"/>
-				</xsl:call-template>
-			</li>
-			<li>
-				<xsl:call-template name="listErrors">
-					<xsl:with-param name="nodes" select="/descendant::warning[@subcategory = 'hint']"/>
-					<xsl:with-param name="category" select="'Hint'"/>
 					<xsl:with-param name="collapsed" select="$collapsed"/>
 				</xsl:call-template>
 			</li>
