@@ -12,7 +12,7 @@
 	<xsl:template match="target">
 		<xsl:variable name="spanClass">
 			<xsl:choose>
-				<xsl:when test="starts-with(@name, '_')">SubTarget</xsl:when>
+				<xsl:when test="starts-with(@name, '_')">SubTarget LowImportance</xsl:when>
 				<xsl:otherwise>Target</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
