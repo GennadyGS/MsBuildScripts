@@ -16,15 +16,6 @@ param (
     $remainingArgs
 )
 
-function ForceFilePath([string] $filePath)
-{
-    $dirPath = Split-Path -parent $filePath;
-    if ($dirPath) 
-    {
-        New-Item -Path $dirPath -Type directory -Force
-    }
-}
-
 function CheckRemoveFile([string] $fileName)
 {
     if (Test-Path $fileName)
@@ -52,15 +43,17 @@ function LogWrapUp ([string] $logFileNameXml, [string] $logFileNameHtml)
 "Project: $project"
 "LogFileNameBase: $logFileNameBase"
 "RemainingArgs: $remainingArgs"
-$scriptPath = Split-Path -parent $MyInvocation.MyCommand.Definition
-$logFileNameXml = "$logFileNameBase.xml"
-$logFileNameHtml = "$logFileNameBase.html"
+$scriptPath = $PSScriptRoot
+$normalizedCurrentPath = $pwd.ToString().replace(':', '')
+$baseLogPath = [IO.Path]::Combine($Env:TEMP, "XMSBuildLog", $normalizedCurrentPath)
+$logFileNameXml = "$baseLogPath\$logFileNameBase.xml"
+$logFileNameHtml = "$baseLogPath\$logFileNameBase.html"
 $loggerAssembly = "$scriptPath\bin\MSBuild.ExtensionPack.Loggers.dll"
 $xslFile = "$scriptPath\xsl\LogToHtml.xslt"
 $msBuildScriptFile = "$scriptPath\MSBuild40.cmd"
 if (!$disableLog) 
 {
-    ForceFilePath $logFileNameBase;
+    New-Item -Path $baseLogPath -Type directory -Force
 	$LoggerSwitch="/logger:XmlFileLogger,`"$loggerAssembly`";logfile=`"$logFileNameXml`";verbosity=Detailed"
     CheckRemoveFile $logFileNameXml;
     CheckRemoveFile $logFileNameHtml;
