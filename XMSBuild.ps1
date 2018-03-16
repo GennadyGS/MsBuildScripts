@@ -50,7 +50,7 @@ $logFileNameXml = "$baseLogPath\$logFileNameBase.xml"
 $logFileNameHtml = "$baseLogPath\$logFileNameBase.html"
 $loggerAssembly = "$scriptPath\bin\MSBuild.ExtensionPack.Loggers.dll"
 $xslFile = "$scriptPath\xsl\LogToHtml.xslt"
-$msBuildScriptFile = "$scriptPath\MSBuild14.cmd"
+$msBuildScriptFile = "MSBuild.exe"
 if (!$disableLog) 
 {
     New-Item -Path $baseLogPath -Type directory -Force
